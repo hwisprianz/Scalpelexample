@@ -49,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
         mCode128Encoder = new Code128Encoder(
                 new BarcodeEncoderParams()
-                        .setBarcodeFormat(BarcodeFormat.CODE128C));
+                        .setBarcodeFormat(BarcodeFormat.CODE128C)
+                        .setBarcodeBandColorArgb(0xFFFF0000)
+                        .setBarcodeSpaceColorArgb(0xFF00FF00)
+                        .setContentTextColorArgb(0xFF0000FF));
 
         obtainPermission();
     }

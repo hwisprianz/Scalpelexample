@@ -8,11 +8,24 @@ import com.blate.scalpel.throwable.EncodeException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Code128C格式的编码器
+ * 将符合Code128C规范的字符串编码成位图
+ * <p>
+ * created by Blate
+ * on2021/06/21
+ */
 public class Code128CEncoder
         implements ICode128Encoder {
 
+    /**
+     * 非空的条码参数
+     */
     private final BarcodeEncoderParams mParams;
 
+    /**
+     * code128符号序列
+     */
     private final List<Code128SymbolTable.Symbol> mSymbols = new ArrayList<>();
 
     public Code128CEncoder(BarcodeEncoderParams params) {
@@ -32,7 +45,10 @@ public class Code128CEncoder
         }
 
         mSymbols.clear();
+
+        //检验值,计算方式参见code128编码规范
         int check = 0;
+
         Code128SymbolTable.Symbol startSymbol = Code128SymbolTable.getSymbolByCodeC(Code128SymbolTable.CODE_START_C);
         mSymbols.add(startSymbol);
         check += startSymbol.id;

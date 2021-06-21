@@ -1,20 +1,42 @@
 package com.blate.scalpel.table;
 
-import androidx.annotation.IntRange;
-
 import com.blate.scalpel.throwable.SymbolInvalidException;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * code128 编码符号表
+ * <p>
+ * created by Blate
+ * on2021/06/21
+ */
 public final class Code128SymbolTable {
 
+    /**
+     * code128校验位计算模
+     */
     public static final int CHECK_MOLD = 103;
 
+    /**
+     * 子集code128A开始位
+     */
     public static final String CODE_START_A = "StartA";
+
+    /**
+     * 子集code128B开始位
+     */
     public static final String CODE_START_B = "StartB";
+
+    /**
+     * 子集code128C开始位
+     */
     public static final String CODE_START_C = "StartC";
+
+    /**
+     * code128结束位,所有子集共用结束位
+     */
     public static final String CODE_END_COMMON = "Stop";
 
     /**
@@ -132,10 +154,22 @@ public final class Code128SymbolTable {
         TABLE_CODE_SYMBOL.add(new Symbol(106, "Stop", "Stop", "Stop", "2331112", "bbsssbbbsbsbb"));
     }
 
+    /**
+     * 获取code128符号编码表
+     *
+     * @return 编码表
+     */
     public static Set<Symbol> getTableCodeSymbol() {
         return new HashSet<>(TABLE_CODE_SYMBOL);
     }
 
+    /**
+     * 通过id获取符号
+     *
+     * @param id id
+     * @return 符号
+     * @throws SymbolInvalidException 尝试获取一个不存在的符号时抛出异常
+     */
     public static Symbol getSymbolById(int id)
             throws SymbolInvalidException {
         Symbol result = null;
@@ -152,6 +186,13 @@ public final class Code128SymbolTable {
         }
     }
 
+    /**
+     * 根据code128A编码值获取符号
+     *
+     * @param codeA code128A子集编码值
+     * @return 符号
+     * @throws SymbolInvalidException 尝试获取不存在的code128A编码值符号抛出异常
+     */
     public static Symbol getSymbolByCodeA(String codeA)
             throws SymbolInvalidException {
         Symbol result = null;
@@ -168,6 +209,13 @@ public final class Code128SymbolTable {
         }
     }
 
+    /**
+     * 根据code128B编码值获取符号
+     *
+     * @param codeB code128B子集编码值
+     * @return 符号
+     * @throws SymbolInvalidException 尝试获取不存在的code128B编码值符号抛出异常
+     */
     public static Symbol getSymbolByCodeB(String codeB)
             throws SymbolInvalidException {
         Symbol result = null;
@@ -184,6 +232,13 @@ public final class Code128SymbolTable {
         }
     }
 
+    /**
+     * 根据code128C编码值获取符号
+     *
+     * @param codeC code128C子集编码值
+     * @return 符号
+     * @throws SymbolInvalidException 尝试获取不存在的code128C编码值符号抛出异常
+     */
     public static Symbol getSymbolByCodeC(String codeC)
             throws SymbolInvalidException {
         Symbol result = null;

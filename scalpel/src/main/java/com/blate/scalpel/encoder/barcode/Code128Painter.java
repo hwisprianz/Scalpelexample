@@ -10,11 +10,33 @@ import com.blate.scalpel.table.Code128SymbolTable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Code128条码的绘制器
+ * 把一个{@link com.blate.scalpel.table.Code128SymbolTable.Symbol}序列绘制为Bitmap
+ * <p>
+ * created by Blate
+ * on2021/06/21
+ */
 public class Code128Painter {
 
+    /**
+     * 画笔
+     */
     private final Paint mPaint = new Paint();
+
+    /**
+     * 矩形,用来测量文本区域
+     */
     private final Rect mContentRect = new Rect();
 
+    /**
+     * constructor
+     *
+     * @param symbols 条码符号序列
+     * @param content 条码内容
+     * @param params  条码参数
+     * @return 合成后的条码位图
+     */
     public Bitmap generate(List<Code128SymbolTable.Symbol> symbols,
                            String content,
                            BarcodeEncoderParams params) {
@@ -24,6 +46,7 @@ public class Code128Painter {
         int mixHeight;
         Bitmap mix;
         if (params.isShowContent()) {
+            //需要绘制文本时的条码合成位图大小计算
             mPaint.setTextSize(Math.max(params.getContentTextSizePx(), 24));
             mPaint.getTextBounds(content, 0, content.length(), mContentRect);
             int contentWidth = mContentRect.right - mContentRect.left;
@@ -56,6 +79,7 @@ public class Code128Painter {
                     mPaint);
 
         } else {
+            //不需要绘制文本时的条码位图大小计算
             mixWidth = barcode.getWidth() + params.getSpaceLeft() + params.getSpaceRight();
             mixHeight = barcode.getHeight() + params.getSpaceTop() + params.getSpaceBottom();
 
@@ -75,6 +99,13 @@ public class Code128Painter {
         return mix;
     }
 
+    /**
+     * 生成条码位图,只是条码,不包含间距或者文本
+     *
+     * @param symbols 条码符号序列
+     * @param params  条码参数
+     * @return 条码位图
+     */
     private Bitmap justGenerateBarcode(List<Code128SymbolTable.Symbol> symbols,
                                        BarcodeEncoderParams params) {
 
@@ -88,6 +119,7 @@ public class Code128Painter {
             }
         }
 
+        //计算合适的单位宽度
         int barcodeColumnWidth = params.getBarcodeUnitWidth();
         if (barcodeColumnWidth < 1) {
             barcodeColumnWidth = params.getBarcodeTotalWidth() / columnCount;
@@ -96,10 +128,12 @@ public class Code128Painter {
             barcodeColumnWidth = 1;
         }
 
-        int[] row = new int[barcodeColumnWidth * columnCount];
+        int[] row = new int[barcodeColumnWidth * columnCount];  //一行的像素序列
         int rowIndex = 0;
         for (int bandIndex = 0; bandIndex < bands.size(); bandIndex += 1) {
+            //填充条空的像素.条空单位可能不是1像素,所以可能需要对每一个条空数据进行循环填充
             for (int columnIndex = 0; columnIndex < bands.get(bandIndex) * barcodeColumnWidth; columnIndex += 1) {
+                //从0开始对band计数,偶数绘制条,技术绘制空
                 row[rowIndex++] = (bandIndex & 0x00000001) == 0 ? params.getBarcodeBandColorArgb() : params.getBarcodeSpaceColorArgb();
             }
         }
@@ -109,6 +143,7 @@ public class Code128Painter {
                 params.getBarcodeHeight(),
                 Bitmap.Config.ARGB_4444);
 
+        //填充位图到需要的高度
         for (int i = 0; i < Math.max(params.getBarcodeHeight(), 4); i += 1) {
             barcode.setPixels(row, 0, barcode.getWidth(), 0, i, barcode.getWidth(), 1);
         }
