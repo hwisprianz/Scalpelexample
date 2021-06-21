@@ -1,2 +1,3 @@
 rootProject.name = "ScalpelExample"
 include ':app'
+include ':scalpel'
