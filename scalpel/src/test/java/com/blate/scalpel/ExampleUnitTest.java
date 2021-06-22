@@ -21,7 +21,8 @@ public class ExampleUnitTest {
 
     @Test
     public void regex() {
-        System.out.println("0123456789".matches("[0-9]+"));
+        //System.out.println("0123456789".matches("[0-9]+"));
+        System.out.println("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_".matches("[0-9A-Z!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_]+"));
     }
 
 }

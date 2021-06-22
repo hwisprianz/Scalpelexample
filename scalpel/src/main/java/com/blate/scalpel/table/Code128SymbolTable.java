@@ -47,12 +47,12 @@ public final class Code128SymbolTable {
     static {
         TABLE_CODE_SYMBOL.add(new Symbol(0, "SP", "SP", "00", "212222", "bbsbbssbbss"));
         TABLE_CODE_SYMBOL.add(new Symbol(1, "!", "!", "01", "222122", "bbssbbsbbss"));
-        TABLE_CODE_SYMBOL.add(new Symbol(2, "“", "“", "02", "222221", "bbssbbssbbs"));
+        TABLE_CODE_SYMBOL.add(new Symbol(2, "\"", "\"", "02", "222221", "bbssbbssbbs"));
         TABLE_CODE_SYMBOL.add(new Symbol(3, "#", "#", "03", "121223", "bssbssbbsss"));
         TABLE_CODE_SYMBOL.add(new Symbol(4, "$", "$", "04", "121322", "bssbsssbbss"));
         TABLE_CODE_SYMBOL.add(new Symbol(5, "%", "%", "05", "131222", "bsssbssbbss"));
         TABLE_CODE_SYMBOL.add(new Symbol(6, "&", "&", "06", "122213", "bssbbssbsss"));
-        TABLE_CODE_SYMBOL.add(new Symbol(7, "‘", "‘", "07", "122312", "bssbbsssbss"));
+        TABLE_CODE_SYMBOL.add(new Symbol(7, "'", "'", "07", "122312", "bssbbsssbss"));
         TABLE_CODE_SYMBOL.add(new Symbol(8, "(", "(", "08", "132212", "bsssbbssbss"));
         TABLE_CODE_SYMBOL.add(new Symbol(9, ")", ")", "09", "221213", "bbssbssbsss"));
         TABLE_CODE_SYMBOL.add(new Symbol(10, "*", "*", "10", "221312", "bbssbsssbss"));

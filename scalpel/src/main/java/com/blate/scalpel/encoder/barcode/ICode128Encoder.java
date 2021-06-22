@@ -17,10 +17,10 @@ public interface ICode128Encoder {
     /**
      * 生成文本对于的条码
      *
-     * @param context 条码内容
+     * @param content 条码内容
      * @return 条码位图
      * @throws EncodeException 编码异常
      */
-    Bitmap encode(String context) throws EncodeException;
+    Bitmap encode(String content) throws EncodeException;
 
 }

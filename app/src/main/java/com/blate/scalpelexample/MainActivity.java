@@ -49,10 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         mCode128Encoder = new Code128Encoder(
                 new BarcodeEncoderParams()
-                        .setBarcodeFormat(BarcodeFormat.CODE128C)
-                        .setBarcodeBandColorArgb(0xFFFF0000)
-                        .setBarcodeSpaceColorArgb(0xFF00FF00)
-                        .setContentTextColorArgb(0xFF0000FF));
+                        .setBarcodeFormat(BarcodeFormat.CODE128A));
+
+        mBinding.etInput.setText("012QWEASZXPL[>.\\\"");
 
         obtainPermission();
     }
@@ -95,6 +94,45 @@ public class MainActivity extends AppCompatActivity {
         requestManageStorage();
     }
 
+    public void onCode128ATestClick() {
+        final int total = 5000;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> mBinding.tvMessage.setText("pressure test progressing..."));
+                File workDir = new File(Environment.getExternalStorageDirectory(), "ScalpelExample/Code128A");
+                if (!workDir.exists() || !workDir.isDirectory()) {
+                    workDir.mkdirs();
+                }
+                long startTimestamp = System.currentTimeMillis();
+                for (int i = 0; i < total; i += 1) {
+                    String content = randomCode128CString(15,"01234567899ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_");
+                    File file = new File(workDir, content.hashCode() + ".png");
+                    if (file.exists() && file.isFile()) {
+                        file.delete();
+                    }
+                    try {
+                        file.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try (OutputStream outputStream = new FileOutputStream(file)) {
+                        mCode128Encoder.encode(content).compress(
+                                Bitmap.CompressFormat.PNG,
+                                100,
+                                outputStream);
+                        Log.i(TAG, String.format("generate [%s] success; progress [%s/%s]", content, i + 1, total));
+                    } catch (IOException | EncodeException e) {
+                        Log.i(TAG, String.format("generate [%s] fail; because : %s", content, e.getMessage()));
+                    }
+                }
+                long endTimeStamp = System.currentTimeMillis();
+                Log.i(TAG, String.format("test complete ! total [%s]; duration [%s]ms", total, endTimeStamp - startTimestamp));
+                runOnUiThread(() -> mBinding.tvMessage.setText("pressure test complete !"));
+            }
+        }).start();
+    }
+
     public void onCode128CTestClick() {
         final int total = 5000;
         new Thread(new Runnable() {
@@ -107,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 long startTimestamp = System.currentTimeMillis();
                 for (int i = 0; i < total; i += 1) {
-                    String content = randomCode128CString();
+                    String content = randomCode128CString(20,"0123456789");
                     File file = new File(workDir, content + ".png");
                     if (file.exists() && file.isFile()) {
                         file.delete();
@@ -148,12 +186,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String randomCode128CString() {
-        String area = "0123456789";
-        final int length = 20;
+    private String randomCode128CString(int length,String area) {
         char[] charArrays = new char[length];
         Random random = new Random();
-        for (int i = 0; i < 20; i += 1) {
+        for (int i = 0; i < length; i += 1) {
             charArrays[i] = area.charAt(random.nextInt(area.length()));
         }
         return new String(charArrays);

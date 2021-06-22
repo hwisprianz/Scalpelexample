@@ -24,8 +24,7 @@ public class Code128Encoder {
 
     public Code128Encoder(BarcodeEncoderParams params) throws Error {
         if (params.getBarcodeFormat() == BarcodeFormat.CODE128A) {
-            mEncoder = null;
-            throw new Error(String.format("not currently supported format[%s]", params.getBarcodeFormat()));
+            mEncoder = new Code128AEncoder(params);
         } else if (params.getBarcodeFormat() == BarcodeFormat.CODE128B) {
             mEncoder = null;
             throw new Error(String.format("not currently supported format[%s]", params.getBarcodeFormat()));
