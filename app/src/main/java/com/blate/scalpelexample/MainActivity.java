@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         mCode128Encoder = new Code128Encoder(
                 new BarcodeEncoderParams()
-                        .setBarcodeFormat(BarcodeFormat.CODE128A));
+                        .setBarcodeFormat(BarcodeFormat.CODE128B));
 
-        mBinding.etInput.setText("012QWEASZXPL[>.\\\"");
+        mBinding.etInput.setText("012QWEASZxpl[>.\\\"{~`|");
 
         obtainPermission();
     }
@@ -107,6 +107,45 @@ public class MainActivity extends AppCompatActivity {
                 long startTimestamp = System.currentTimeMillis();
                 for (int i = 0; i < total; i += 1) {
                     String content = randomCode128CString(15,"01234567899ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_");
+                    File file = new File(workDir, content.hashCode() + ".png");
+                    if (file.exists() && file.isFile()) {
+                        file.delete();
+                    }
+                    try {
+                        file.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try (OutputStream outputStream = new FileOutputStream(file)) {
+                        mCode128Encoder.encode(content).compress(
+                                Bitmap.CompressFormat.PNG,
+                                100,
+                                outputStream);
+                        Log.i(TAG, String.format("generate [%s] success; progress [%s/%s]", content, i + 1, total));
+                    } catch (IOException | EncodeException e) {
+                        Log.i(TAG, String.format("generate [%s] fail; because : %s", content, e.getMessage()));
+                    }
+                }
+                long endTimeStamp = System.currentTimeMillis();
+                Log.i(TAG, String.format("test complete ! total [%s]; duration [%s]ms", total, endTimeStamp - startTimestamp));
+                runOnUiThread(() -> mBinding.tvMessage.setText("pressure test complete !"));
+            }
+        }).start();
+    }
+
+    public void onCode128BTestClick() {
+        final int total = 5000;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> mBinding.tvMessage.setText("pressure test progressing..."));
+                File workDir = new File(Environment.getExternalStorageDirectory(), "ScalpelExample/Code128B");
+                if (!workDir.exists() || !workDir.isDirectory()) {
+                    workDir.mkdirs();
+                }
+                long startTimestamp = System.currentTimeMillis();
+                for (int i = 0; i < total; i += 1) {
+                    String content = randomCode128CString(15,"01234567899abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
                     File file = new File(workDir, content.hashCode() + ".png");
                     if (file.exists() && file.isFile()) {
                         file.delete();

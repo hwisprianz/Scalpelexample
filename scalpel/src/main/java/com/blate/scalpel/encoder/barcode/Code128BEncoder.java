@@ -8,14 +8,7 @@ import com.blate.scalpel.throwable.EncodeException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Code128A格式的编码器
- * 将符合Code128A规范的字符串编码成位图
- * <p>
- * created by Blate
- * on2021/06/21
- */
-public class Code128AEncoder
+public class Code128BEncoder
         implements ICode128Encoder {
 
     /**
@@ -28,7 +21,7 @@ public class Code128AEncoder
      */
     private final List<Code128SymbolTable.Symbol> mSymbols = new ArrayList<>();
 
-    public Code128AEncoder(BarcodeEncoderParams params) {
+    public Code128BEncoder(BarcodeEncoderParams params) {
         mParams = params;
     }
 
@@ -37,8 +30,8 @@ public class Code128AEncoder
     @Override
     public Bitmap encode(String content) throws EncodeException {
         String cooked = content.trim();
-        if (!cooked.matches("[0-9A-Z!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_]+")) {
-            throw new EncodeException("code128a can only encode only contain 01234567899ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_ content");
+        if (!cooked.matches("[0-9a-zA-Z!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~]+")) {
+            throw new EncodeException("code128a can only encode only contain 01234567899abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ content");
         }
 
         mSymbols.clear();
@@ -46,18 +39,18 @@ public class Code128AEncoder
         //检验值,计算方式参见code128编码规范
         int check = 0;
 
-        Code128SymbolTable.Symbol startSymbol = Code128SymbolTable.getSymbolByCodeA(Code128SymbolTable.CODE_START_A);
+        Code128SymbolTable.Symbol startSymbol = Code128SymbolTable.getSymbolByCodeB(Code128SymbolTable.CODE_START_B);
         mSymbols.add(startSymbol);
         check += startSymbol.id;
         for (int i = 0; i < cooked.length(); i += 1) {
-            Code128SymbolTable.Symbol symbol = Code128SymbolTable.getSymbolByCodeA(cooked.substring(i, i + 1));
+            Code128SymbolTable.Symbol symbol = Code128SymbolTable.getSymbolByCodeB(cooked.substring(i, i + 1));
             check += (i + 1) * symbol.id;
             mSymbols.add(symbol);
         }
         check %= Code128SymbolTable.CHECK_MOLD;
         Code128SymbolTable.Symbol checkSymbol = Code128SymbolTable.getSymbolById(check);
         mSymbols.add(checkSymbol);
-        mSymbols.add(Code128SymbolTable.getSymbolByCodeA(Code128SymbolTable.CODE_END_COMMON));
+        mSymbols.add(Code128SymbolTable.getSymbolByCodeB(Code128SymbolTable.CODE_END_COMMON));
 
         return mCode128Painter.generate(mSymbols, content, mParams);
     }

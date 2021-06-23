@@ -121,7 +121,7 @@ public final class Code128SymbolTable {
         TABLE_CODE_SYMBOL.add(new Symbol(73, "HT", "i", "73", "142112", "bssssbbsbss"));
         TABLE_CODE_SYMBOL.add(new Symbol(74, "LF", "j", "74", "142211", "bssssbbssbs"));
         TABLE_CODE_SYMBOL.add(new Symbol(75, "VT", "k", "75", "241211", "bbssssbssbs"));
-        TABLE_CODE_SYMBOL.add(new Symbol(76, "FF", "I", "76", "221114", "bbssbsbssss"));
+        TABLE_CODE_SYMBOL.add(new Symbol(76, "FF", "l", "76", "221114", "bbssbsbssss"));
         TABLE_CODE_SYMBOL.add(new Symbol(77, "CR", "m", "77", "413111", "bbbbsbbbsbs"));
         TABLE_CODE_SYMBOL.add(new Symbol(78, "SO", "n", "78", "241112", "bbssssbsbss"));
         TABLE_CODE_SYMBOL.add(new Symbol(79, "SI", "o", "79", "134111", "bsssbbbbsbs"));
@@ -203,7 +203,7 @@ public final class Code128SymbolTable {
             }
         }
         if (result == null) {
-            throw new SymbolInvalidException(String.format("code [%s] does not exist in the code128A", codeA));
+            throw new SymbolInvalidException(String.format("code %s does not exist in the code128A", codeA));
         } else {
             return result;
         }
@@ -226,7 +226,7 @@ public final class Code128SymbolTable {
             }
         }
         if (result == null) {
-            throw new SymbolInvalidException(String.format("code [%s] does not exist in the code128B", codeB));
+            throw new SymbolInvalidException(String.format("code %s does not exist in the code128B", codeB));
         } else {
             return result;
         }
@@ -249,7 +249,7 @@ public final class Code128SymbolTable {
             }
         }
         if (result == null) {
-            throw new SymbolInvalidException(String.format("code [%s] does not exist in the code128C", codeC));
+            throw new SymbolInvalidException(String.format("code %s does not exist in the code128C", codeC));
         } else {
             return result;
         }

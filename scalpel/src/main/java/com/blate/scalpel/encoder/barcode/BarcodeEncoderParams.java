@@ -14,7 +14,7 @@ public class BarcodeEncoderParams {
     /**
      * 条码格式
      */
-    private BarcodeFormat mBarcodeFormat = BarcodeFormat.CODE128AUTO;
+    private BarcodeFormat mBarcodeFormat = BarcodeFormat.CODE128A;
 
 
     /*--------------------------------条码尺寸--------------------------------*/

@@ -26,13 +26,9 @@ public class Code128Encoder {
         if (params.getBarcodeFormat() == BarcodeFormat.CODE128A) {
             mEncoder = new Code128AEncoder(params);
         } else if (params.getBarcodeFormat() == BarcodeFormat.CODE128B) {
-            mEncoder = null;
-            throw new Error(String.format("not currently supported format[%s]", params.getBarcodeFormat()));
+            mEncoder = new Code128BEncoder(params);
         } else if (params.getBarcodeFormat() == BarcodeFormat.CODE128C) {
             mEncoder = new Code128CEncoder(params);
-        } else if (params.getBarcodeFormat() == BarcodeFormat.CODE128AUTO) {
-            mEncoder = null;
-            throw new Error(String.format("not currently supported format[%s]", params.getBarcodeFormat()));
         } else {
             mEncoder = null;
             throw new Error(String.format("not supported format[%s]", params.getBarcodeFormat()));

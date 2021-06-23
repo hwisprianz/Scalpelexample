@@ -74,6 +74,15 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:onClick="@{()->host.onCode128BTestClick()}"
+            android:text="code128b test" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:onClick="@{()->host.onCode128CTestClick()}"
             android:text="code128c test" />
 
