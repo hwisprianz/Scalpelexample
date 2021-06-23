@@ -8,16 +8,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.blate.scalpel.encoder.barcode.BarcodeFormat;
 import com.blate.scalpel.encoder.barcode.BarcodeEncoderParams;
@@ -26,7 +23,6 @@ import com.blate.scalpel.throwable.EncodeException;
 import com.blate.scalpelexample.databinding.ActivityMainBinding;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 long startTimestamp = System.currentTimeMillis();
                 for (int i = 0; i < total; i += 1) {
-                    String content = randomCode128CString(15,"01234567899ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_");
+                    String content = randomCode128String(15,"01234567899ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_");
                     File file = new File(workDir, content.hashCode() + ".png");
                     if (file.exists() && file.isFile()) {
                         file.delete();
@@ -145,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 long startTimestamp = System.currentTimeMillis();
                 for (int i = 0; i < total; i += 1) {
-                    String content = randomCode128CString(15,"01234567899abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
+                    String content = randomCode128String(15,"01234567899abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
                     File file = new File(workDir, content.hashCode() + ".png");
                     if (file.exists() && file.isFile()) {
                         file.delete();
@@ -184,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 long startTimestamp = System.currentTimeMillis();
                 for (int i = 0; i < total; i += 1) {
-                    String content = randomCode128CString(20,"0123456789");
+                    String content = randomCode128String(20,"0123456789");
                     File file = new File(workDir, content + ".png");
                     if (file.exists() && file.isFile()) {
                         file.delete();
@@ -225,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String randomCode128CString(int length,String area) {
+    private String randomCode128String(int length, String area) {
         char[] charArrays = new char[length];
         Random random = new Random();
         for (int i = 0; i < length; i += 1) {
