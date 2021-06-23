@@ -14,4 +14,4 @@
 通过参数BarcodeEncoderParams指定Code128编码子集和生成的条码样式  
 
 
-[测试](./docs/md/test)
+[测试报告](./docs/md/test.md)
