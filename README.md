@@ -7,6 +7,26 @@ lib version v1.0.0
 支持将符合规范的字符串编码为Code128图像,输出位图  
 目前支持Code128A,Code128B,Code128C; 不支持UCC/EAN-128,如果需要这种编码请直接使用zxing  
 
+---
+
+* 依赖
+
+以下方式任选其一:  
+
+>### 依赖module
+1. 复制项目根目录下 scalpel 目录到你的项目根目录下  
+2. 在需要解码器的mudule的 build.gradle 中添加依赖:  
+```groovy
+dependencies {
+
+    implementation project(path: ':scalpel') //增加这个依赖
+
+}
+```
+>### 依赖远程仓库
+
+---  
+
 * 使用方法  
 
 ```java
@@ -34,6 +54,14 @@ setContentTextColorArgb(int)|设置文本颜色
 setShowContent(boolean)|是否在条码底部显示内容文本(是的,如果要显示内容文本,只能显示在底部,这个没得选)
 setBarcodeAndContentSpace(int)|设置内容文本和条码之间的间距
 setContentTextSizePx(int)|设置内容文本的大小
+
+---
+
+## 混淆  
+项目没有使用jni,且不依赖反射工作,所以理论上可以任意混淆,如果打包出现问题可以保持  
+```groovy
+-keep class com.blate.scalpel.**{*;} 
+```
 
 ---
 
