@@ -1,7 +1,5 @@
 package com.blate.scalpel.throwable;
 
-import androidx.annotation.Nullable;
-
 /**
  * 编码异常
  * 尝试编码时出现异常
@@ -13,7 +11,7 @@ import androidx.annotation.Nullable;
 public class EncodeException
         extends Throwable {
 
-    public EncodeException(@Nullable String message) {
+    public EncodeException(String message) {
         super(message);
     }
 
