@@ -23,7 +23,27 @@ dependencies {
 
 }
 ```
->### 依赖远程仓库
+>### 依赖远程仓库  
+1. 在工程的build.gradle文件的allprojects节点下的repositories节点下添加mavenCentral(). (如果已有就不需要添加了)  
+2. 在需要依赖的module的build.gradle文件的dependencies节点下添加 implementation 'io.github.blatez:scalpel:x.y.z' (当前最新版本1.0.0)  
+
+工程的build.gradle  
+```groovy
+allprojects {
+    repositories {
+        google()
+        mavenCentral()  //需要依赖这个仓库
+    
+    }
+}
+```  
+需要依赖的module的build.gradle  
+```groovy
+dependencies {
+    //你的其他依赖
+    implementation 'io.github.blatez:scalpel:1.0.0' //版本可自行更改
+}
+```
 
 ---  
 
