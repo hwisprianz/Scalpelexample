@@ -43,11 +43,16 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 
-Properties properties = new Properties()
+//这是将配置写到本工程的引用方法
+/*Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 def ossrhUsername = properties.getProperty("ossrhUsername")
-def ossrhPassword = properties.getProperty("ossrhPassword")
+def ossrhPassword = properties.getProperty("ossrhPassword")*/
+
+//这是将配置写到gradle_user_home环境变量下的.gradle/gradle.properties的引用方法
+def ossrhUsername = ossrhUsername
+def ossrhPassword = ossrhPassword
 
 def PUBLISH_GROUP_ID = publishedGroupId //这里可以不是直接申请时候的groupId只要开头是就可以
 
